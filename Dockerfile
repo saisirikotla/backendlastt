@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.8.5-openjdk-17 AS build
+FROM maven:3.8.5-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 # Download dependencies first for caching purposes
@@ -8,7 +8,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 # COPY the jar from build stage
 COPY --from=build /app/target/lost-and-found-0.0.1-SNAPSHOT.jar app.jar
